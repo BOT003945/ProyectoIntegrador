@@ -1,28 +1,4 @@
-﻿@page "/mascotas"
-
-<PageTitle>Mascotas</PageTitle>
-
-@using PetServiceBlazor.Data.Models
-@using System.Net.Http
-@using System.Net.Http.Json
-@inject HttpClient http
-
-
-<div class="title">
-    <div class="title_content">
-        <h1>Mascotas</h1>
-    </div>
-    <div class="title_btn">
-        <a href="/mascotas/add" class="btn btn-success">
-            <i class="oi oi´-plus"></i>
-            Añadir
-        </a>
-    </div>
-</div>
-
-<p>This component demonstrates fetching data from a service.</p>
-
-@if (mascotas == null)
+﻿@if (mascotas == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -40,7 +16,6 @@ else
             {
                 <tr>
                     <td>@mascota.Nombre</td>
-
                     <td>
                         <span class="icon">
                             <a href="/mascotas/update/@mascota.IdMascota" class="oi oi-pencil" title="Editar"></a>
