@@ -1,6 +1,6 @@
-﻿@page "/mascotas/delete/{id:int}"
+@page "/mascotas/delete/{id:int}"
 
-<PageTitle>Borrar Mascota [@mascota?.Nombre]?</PageTitle>
+<PageTitle>Borrar Mascota [@mascota ?.Nombre]?</PageTitle>
 <h1>¿Esta seguro que desea borrar este registro?</h1>
 
 <button @onclick="ConfirmDelete" class="btn btn-primary">Confirmar</button>
@@ -16,11 +16,11 @@
     [Parameter]
     public int id { get; set; }
 
-    Mascotas? mascota;
+    Mascota? mascota;
 
     protected override async Task OnInitializedAsync()
     {
-        mascota = await http.GetFromJsonAsync<Mascotas>($"api/Mascotas/{id}");
+        mascota = await http.GetFromJsonAsync<Mascota>($"api/Mascotas/{id}");
     }
     private async Task ConfirmDelete()
     {
