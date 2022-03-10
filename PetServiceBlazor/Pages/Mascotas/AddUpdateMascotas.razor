@@ -1,7 +1,6 @@
 ﻿@page "/mascotas/add"
 @page "/mascotas/update/{id:int}"
 
-
 <PageTitle>@(isUpdate ? $"Editar Mascota[IdMascota : {mascota.IdMascota}] " : "Agregar Mascota")</PageTitle>
 <h1>@(isUpdate ? $"Editar Mascota[IdMascota:{mascota.IdMascota}] " : "Agregar Mascota")</h1>
 
@@ -23,21 +22,21 @@
             <InputDate class="form-control" @bind-Value="@mascota.FechaNacimiento" id="fechanacimiento"></InputDate>
         </div>
         <!--ID del Propietario-->
-        <!--<div class="mb-2">
-            <label class="form-label" for="name">Propi</label>
-            <InputSelect class="form-control" @bind-Value="@mascota.IdPropietario" id="nombre">
+        <div class="mb-2">
+            <label class="form-label" for="propietario">Propietario</label>
+            <InputSelect class="form-control" @bind-Value="@mascota.IdPropietario" >
                 <option value="-1" disabled>Selecciona un propietario</option>
-                @*@if (loading)
+                @if (loading)
                 {
                    <option value="0" disabled>Cargando...</option>
-                }else if (authors = null){
-                @foreach(var author in authors)
+                }else if (propietarios != null){
+                @foreach(var propietario in propietarios)
                 {
-                  <option value="@author.Id">@author.GetName</option>
+                  <option value="@propietario.IdPropietario">@propietario.GetName()</option>
                 }
-                }*@
+                }
             </InputSelect>
-        </div>-->
+        </div>
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a class="btn btn-danger" href="/mascotas">Cancelar</a>
     </form>
@@ -50,22 +49,23 @@
 @inject NavigationManager NavigationManager
 
 @code {
+    [Parameter]
     public int id { get; set; }
     public bool isUpdate { get; set; } = false;
 
     bool loading = true;
 
-    IList<Mascotas>? mascotas;
+    IList<Propietario>? propietarios;
 
-    Mascotas mascota = new Mascotas();
+    Mascota mascota = new Mascota();
 
     protected override async Task OnInitializedAsync()
     {
-        mascotas = await http.GetFromJsonAsync<IList<Mascotas>>("api/Mascota");
+        propietarios = await http.GetFromJsonAsync<IList<Propietario>>("api/Propietarios");
         isUpdate = id != 0;
         if (isUpdate)
         {
-            var response = await http.GetFromJsonAsync<Mascotas>($"api/Mascota/{id}");
+            var response = await http.GetFromJsonAsync<Mascota>($"api/Mascotas/{id}");
             if(response != null)
             {
                 mascota = response;
@@ -78,13 +78,13 @@
         HttpResponseMessage? response;
         if (isUpdate)
         {
-            response = await http.PutAsJsonAsync<Mascotas>($"api/Mascota/{id}", mascota!);
+            response = await http.PutAsJsonAsync<Mascota>($"api/Mascotas/{id}", mascota!);
         }
         else
         {
-            response = await http.PostAsJsonAsync<Mascotas>($"api/Mascota", mascota!);
+            response = await http.PostAsJsonAsync<Mascota>("api/Mascotas", mascota!);
         }
-        Mascotas? saved = response.Content.ReadFromJsonAsync<Mascotas>().Result;
+        Mascota? saved = response.Content.ReadFromJsonAsync<Mascota>().Result;
         NavigationManager.NavigateTo("/mascotas");
     }
 }
