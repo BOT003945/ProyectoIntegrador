@@ -11,7 +11,7 @@ namespace PetServiceBlazor.Data.Models
             Cita = new HashSet<Cita>();
         }
 
-        public int IdPerro { get; set; }
+        public int IdMascota { get; set; }
         public string Nombre { get; set; } = null!;
         public string Sexo { get; set; } = null!;
         public DateTime? FechaNacimiento { get; set; }
