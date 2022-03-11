@@ -20,7 +20,12 @@ namespace PetService.Models
         public string? Sexo { get; set; }
         public int IdMunicipio { get; set; }
         public int? IdUsuario { get; set; }
-
+      
+        public string? GetName()
+        {
+            return $"{ Nombres} { Apellidos}";
+        }
+        
         public virtual Usuario? IdUsuarioNavigation { get; set; }
         public virtual Venta Venta { get; set; } = null!;
         public virtual ICollection<Cita> Cita { get; set; }
