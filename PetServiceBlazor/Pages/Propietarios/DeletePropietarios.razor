@@ -1,0 +1,33 @@
+﻿@page "/usuarios/delete/{id:int}"
+
+<PageTitle>Borrar Mascota [@usuarios ?.Nombres]?</PageTitle>
+<h1>¿Esta seguro que desea borrar este registro?</h1>
+
+<button @onclick="ConfirmDelete" class="btn btn-primary">Confirmar</button>
+<a class="btn btn-danger" href="/usuarios">Cancelar</a>
+
+@using PetServiceBlazor.Data.Models
+@using System.Net.Http
+@using System.Net.Http.Json
+@inject HttpClient http
+@inject NavigationManager NavigationManager
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    Usuario? usuarios;
+
+    protected override async Task OnInitializedAsync()
+    {
+        usuarios = await http.GetFromJsonAsync<Usuario>($"api/Usuarios/{id}");
+    }
+    private async Task ConfirmDelete()
+    {
+        var response = await http.DeleteAsync($"api/Usuarios/{id}");
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/usuarios");
+        }
+    }
+}

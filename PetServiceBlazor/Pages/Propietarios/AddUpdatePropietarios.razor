@@ -1,0 +1,74 @@
+﻿@page "/usuarios/add"
+@page "/usuarios/update/{id:int}"
+
+<PageTitle>@(isUpdate ? $"Editar propietario[IdUsuario : {usuarios.IdUsuario}] " : "Agregar propietario")</PageTitle>
+<h1>@(isUpdate ? $"Editar Mascota[IdUsuario:{usuarios.IdUsuario}] " : "Agregar propietario")</h1>
+
+<EditForm Model="@usuarios">
+    <form class="container border" @onsubmit="Save">
+        <!--Nombre de la mascota-->
+        <div class="mb-2">
+            <label class="form-label" for="name">Nombre</label>
+            <InputText class="form-control" @bind-Value="@usuarios.Nombres" id="nombre"></InputText>
+        </div>
+        <!--Sexo de la mascota-->
+        <div class="mb-2">
+            <label class="form-label" for="sexo">Sexo</label>
+            <InputText class="form-control" @bind-Value="@usuarios.Sexo" id="sexo"></InputText>
+        </div>
+        <!--Fecha de nacimiento-->
+        <div class="mb-2">
+            <label class="form-label" for="fechanacimiento">Fecha de Nacimiento</label>
+            <InputDate class="form-control" @bind-Value="@usuarios.FechaNacimiento" id="fechanacimiento"></InputDate>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-danger" href="/propietarios">Cancelar</a>
+    </form>
+</EditForm>
+
+@using PetServiceBlazor.Data.Models
+@using System.Net.Http
+@using System.Net.Http.Json
+@inject HttpClient http
+@inject NavigationManager NavigationManager
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+    public bool isUpdate { get; set; } = false;
+
+    bool loading = true;
+
+    //IList<Propietario>? propietarios;
+
+    Usuario usuarios = new Usuario();
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    propietarios = await http.GetFromJsonAsync<IList<Propietario>>("api/Propietarios");
+    //    isUpdate = id != 0;
+    //    if (isUpdate)
+    //    {
+    //        var response = await http.GetFromJsonAsync<Mascota>($"api/Mascotas/{id}");
+    //        if(response != null)
+    //        {
+    //            mascota = response;
+    //        }
+    //    }
+    //    loading = false;
+    //}                   
+    protected async Task Save()
+    {
+        HttpResponseMessage? response;
+        if (isUpdate)
+        {
+            response = await http.PutAsJsonAsync<Usuario>($"api/Usuarios/{id}", usuarios!);
+        }
+        else
+        {
+            response = await http.PostAsJsonAsync<Usuario>("api/Usuarios", usuarios!);
+        }
+        Usuario? saved = response.Content.ReadFromJsonAsync<Usuario>().Result;
+        NavigationManager.NavigateTo("/propietarios");
+    }
+}
