@@ -1,0 +1,92 @@
+﻿@page "/mascotas/add"
+@page "/mascotas/update/{id:int}"
+
+<PageTitle>@(isUpdate ? $"Editar Mascota[IdMascota : {mascota.IdMascota}] " : "Agregar Mascota")</PageTitle>
+<h1>@(isUpdate ? $"Editar Mascota[IdMascota:{mascota.IdMascota}] " : "Agregar Mascota")</h1>
+
+<EditForm Model="@mascota">
+    <form class="container border" @onsubmit="Save">
+        <!--Nombre de la mascota-->
+        <div class="mb-2">
+            <label class="form-label" for="name">Nombre</label>
+            <InputText class="form-control" @bind-Value="@mascota.Nombre" id="nombre"></InputText>
+        </div>
+        <!--Sexo de la mascota-->
+        <div class="mb-2">
+            <label class="form-label" for="sexo">Sexo</label>
+            <InputText class="form-control" @bind-Value="@mascota.Sexo" id="sexo"></InputText>
+        </div>
+        <!--Fecha de nacimiento-->
+        <div class="mb-2">
+            <label class="form-label" for="fechanacimiento">Fecha de Nacimiento</label>
+            <InputDate class="form-control" @bind-Value="@mascota.FechaNacimiento" id="fechanacimiento"></InputDate>
+        </div>
+        <!--ID del Propietario-->
+        <div class="mb-2">
+            <label class="form-label" for="propietario">Propietario</label>
+            <InputSelect class="form-control" @bind-Value="@mascota.IdUsuario" >
+                <option value="-1" disabled>Selecciona un propietario</option>
+                @if (loading)
+                {
+                   <option value="0" disabled>Cargando...</option>
+                }else if (usuarios != null){
+                @foreach(var usuario in usuarios)
+                {
+                  <option value="@usuario.IdUsuario">@usuario.GetName()</option>
+                }
+                }
+            </InputSelect>
+        </div>
+      
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-danger" href="/mascotas">Cancelar</a>
+    </form>
+</EditForm>
+
+@using PetServiceBlazor.Data.Models
+@using System.Net.Http
+@using System.Net.Http.Json
+@inject HttpClient http
+@inject NavigationManager NavigationManager
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+    public bool isUpdate { get; set; } = false;
+
+    bool loading = true;
+
+    IList<Usuario>? usuarios;
+   
+    Mascota mascota = new Mascota();
+
+    protected override async Task OnInitializedAsync()
+    {
+        usuarios = await http.GetFromJsonAsync<IList<Usuario>>("api/Usuarios");
+        isUpdate = id != 0;
+        if (isUpdate)
+        {
+            var response = await http.GetFromJsonAsync<Mascota>($"api/Mascotas/{id}");
+            if(response != null)
+            {
+                mascota = response;
+            }
+        }
+        loading = false;
+    }                   
+             
+    protected async Task Save()
+    {
+        HttpResponseMessage? response;
+        if (isUpdate)
+        {
+            response = await http.PutAsJsonAsync<Mascota>($"api/Mascotas/{id}", mascota!);
+        }
+        else
+        {
+            response = await http.PostAsJsonAsync<Mascota>("api/Mascotas", mascota!);
+        }
+        Mascota? saved = response.Content.ReadFromJsonAsync<Mascota>().Result;
+        NavigationManager.NavigateTo("/mascotas");
+    }
+}
