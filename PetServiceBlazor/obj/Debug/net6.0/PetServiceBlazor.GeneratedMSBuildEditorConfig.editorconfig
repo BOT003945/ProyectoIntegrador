@@ -1,0 +1,92 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = PetServiceBlazor
+build_property.RootNamespace = PetServiceBlazor
+build_property.ProjectDir = C:\Users\vicen\Documents\ProyectoIntegrador\PetServiceBlazor\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\vicen\Documents\ProyectoIntegrador\PetServiceBlazor
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/Pages/Counter.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/Pages/FetchData.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/Pages/Mascotas/AddMascotas.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFzY290YXNcQWRkTWFzY290YXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/Pages/Mascotas/DeleteMascotas.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFzY290YXNcRGVsZXRlTWFzY290YXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/Pages/Mascotas/Mascotas.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFzY290YXNcTWFzY290YXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/Pages/Mascotas/UpdateMascotas.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFzY290YXNcVXBkYXRlTWFzY290YXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/Pages/Usuarios/AddUsuarios.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXN1YXJpb3NcQWRkVXN1YXJpb3MucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/Pages/Usuarios/DeleteUsuarios.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXN1YXJpb3NcRGVsZXRlVXN1YXJpb3MucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/Pages/Usuarios/UpdateUsuarios.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXN1YXJpb3NcVXBkYXRlVXN1YXJpb3MucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/Pages/Usuarios/Usuarios.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXN1YXJpb3NcVXN1YXJpb3MucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/Shared/SurveyPrompt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-erbqkeup79
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-2yqqeos4k2
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/Pages/_Host.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/vicen/Documents/ProyectoIntegrador/PetServiceBlazor/Pages/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0xheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
