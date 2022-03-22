@@ -1,0 +1,30 @@
+.title{
+    display:flex;
+    justify-content: space-between;
+
+    &__content{
+        color: initial;
+    }
+    &__btn{
+        margin: auto 0;
+    }
+}
+
+.border{
+    border: 1px solid #dee2e6; 
+}
+.form-label{
+    font-weight: bold;
+}
+.icon{
+    cursor: pointer;
+}
+a.oi{
+    text-decoration: none;
+    color: black;
+
+    &:hover{
+        @extend a.oi;
+        opacity: 0.5;
+    }
+}
