@@ -1,0 +1,30 @@
+﻿@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+<AuthorizeView> @* AuthorizeView tiene 3 componentes Autorizado para el usuario*@
+    <Authorized>@* Lo que e usuario puede ver si esta autorizado *@
+        
+        <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+    </Authorized>
+    <NotAuthorized>@* lo que el usuario no puede ver  *@
+         
+        @* Usted no esta autorizado *@
+    </NotAuthorized> 
+   <Authorizing>@*lo que le va a salir si en ese momento el usuario se esta autorizando*@
+        
+        Autorizando
+    </Authorizing>
+</AuthorizeView>
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}

@@ -1,0 +1,24 @@
+﻿@page "/login"
+
+<PageTitle>Index</PageTitle>
+
+<h1>Iniciar Sesión</h1>
+
+<EditForm>
+     <form >
+                <DataAnnotationsValidator />
+                <div class="form-group">
+                    <label>Correo</label>
+                    <InputText @bind-Value="usuarios.Correo" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <InputText @bind-Value="usuarios.Contra" class="form-control" />
+                </div>
+      </form>
+</EditForm>
+@using PetServiceBlazor.Data.Models
+@code{
+
+    Usuarios usuarios;
+}

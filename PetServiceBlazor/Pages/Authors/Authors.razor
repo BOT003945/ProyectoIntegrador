@@ -1,0 +1,76 @@
+@page "/authors"
+
+<PageTitle>Authors</PageTitle>
+
+@using PetServiceBlazor.Data.Models
+@using System.Net.Http
+@using System.Net.Http.Json
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedLocalStorage BrowserStorage
+@inject HttpClient http
+@* boton para crear un formulario *@
+<div class="title">
+    <div class="title__content">
+        <h1>Autores</h1>
+    </div>
+    <div class="title__btn">
+        <a href="/authors/add" class="btn btn-success">
+            <i class="fas fa-plus"></i>
+             &nbsp 
+            Agregar
+        </a>
+    </div>
+</div>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (authors == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>LastName</th>
+                <th>Books</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var author in authors)
+            {
+                <tr>
+                    <td>@author.Name</td>
+                    <td>@author.LastName</td>
+                    <td>
+                        @if (@author.Books != null){
+                            @foreach (var book in @author.Books)
+                            {
+                                <div>@book.Name</div>
+                            }
+                        }else{
+                             <p><em>No Books...</em></p>
+                        }
+                            
+                    </td>
+                
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private readonly string api = "api/Author";
+    private IList<Author>? authors;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await BrowserStorage.GetAsync<string>("token");
+        http.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+    
+        authors = await http.GetFromJsonAsync<IList<Author>>(api);
+    }
+}

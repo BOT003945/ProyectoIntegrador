@@ -1,0 +1,91 @@
+@page "/mascotas/add"
+@page "/mascotas/update/{id:int}"
+
+<PageTitle>@(isUpdate ? $"Editar mascota [IdMascota:{mascota.IdMascota}] " : "Agregar mascota")</PageTitle>
+
+
+
+<h1>@(isUpdate ? $"Editar mascota [Id:{mascota.IdMascota}] " : "Agregar mascota")</h1>
+
+<EditForm Model="@mascota">
+    <form class ="container border" @onsubmit="Save">
+        <div class="mb-2">
+            <label class="form-label" for="nombre">Nombre</label>
+            <InputText class="form-control" @bind-Value="@mascota.Nombre" id="nombre"></InputText>
+        </div>
+        <div class="mb-2">
+            <label class="form-label" for="fechanacimiento">Fecha de Nacimiento</label>
+            <InputDate class="form-control" @bind-Value="@mascota.FechaNacimiento" id="fechanacimiento"></InputDate>
+        </div>
+        <div class="mb-2">
+            <label class="form-label" for="IdUsuario">Dueño</label>
+            <InputSelect class="form-control" @bind-Value="@mascota.IdUsuario">
+                <option value="-1" disabled>Seleccione un Dueño</option>
+            @if(loading){
+                <option value="0" disabled>Cargando...</option>
+            }else if(usuarios != null){
+                @foreach (var usuario in usuarios)
+                {
+                    <option value="@usuario.IdUsuario">@usuario.GetName() </option>
+                }   
+            }
+            </InputSelect>
+
+        </div>
+        <button type="submit" class="btn btn-primary" >Guardar</button>
+        <a class="btn btn-danger"href="/mascotas" >Cancelar</a>
+    </form>
+
+</EditForm>
+
+@using System.Net.Http
+@using System.Net.Http.Json
+@using PetServiceBlazor.Data.Models
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedLocalStorage BrowserStorage
+@inject HttpClient http
+@inject NavigationManager NavigationManager
+
+
+@code 
+{
+    [Parameter]
+    public int id { get; set; }
+    public bool isUpdate {get; set;} = false;
+    bool loading = true;
+    /*consulta la lista de autores*/
+    IList<Usuarios>? usuarios;
+
+    Mascota mascota =  new Mascota();
+   
+    /*trae la lista de autores para poder seleccionarlo desde el selector*/
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await BrowserStorage.GetAsync<string>("token");
+        http.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");    
+    
+        usuarios = await http.GetFromJsonAsync<IList<Usuarios>>("api/Usuarios");
+        isUpdate = id != 0;
+        if(isUpdate){
+            var response = await http.GetFromJsonAsync<Mascota>($"api/Mascotas/{id}");
+                if(response != null){
+                    mascota = response;
+                }
+        }
+        loading = false;
+    }
+    /*envia la información que se envio por el formulario*/
+    protected async Task Save(){
+        var token = await BrowserStorage.GetAsync<string>("token");
+        http.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+    
+        HttpResponseMessage? response;
+        if(isUpdate){
+            response = await http.PutAsJsonAsync<Mascota>($"api/Mascotas/{id}", mascota!);
+        }else{
+            response =  await http.PostAsJsonAsync<Mascota>("api/Mascotas", mascota!);
+        }
+        Mascota? saved = response.Content.ReadFromJsonAsync<Mascota>().Result;
+        NavigationManager.NavigateTo("/mascotas");
+    }
+}
