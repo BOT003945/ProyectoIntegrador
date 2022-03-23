@@ -1,0 +1,45 @@
+﻿@page "/"
+
+<PageTitle>Login</PageTitle>
+ <br> <br>
+<center><h1 style="color: rgb(27, 90, 55);">Inicio Sesion</h1></center> <br>
+
+<center><h3 style="font-style: italic; color: rgb(27, 90, 55);">Bienvenido a nuestro sistema, favor de ingresar datos solicitados.</h3></center> <br> <br>
+
+<div class="row">
+            <div class="right-content">
+                <div class="container">
+                    <Center>
+                        <div class="card text-dark bg-light mb-3 border-light" style="max-width: 18rem;">
+                            <div class="card-body">
+                                <form asp-action="Onpost" method="Post">
+                                    <div class="col-md-12">
+                                        <fieldset>
+                                            <label asp-for="Correo" class="control-label">Correo:</label> <br>
+                                            <input asp-for="Correo" name="Cor" class="form-control" type="email" placeholder="Escriba su correo" required="" />
+                                            <span asp-validation-for="Correo" class="text-danger"></span>
+                                        </fieldset>
+                                    </div> <br> <br>
+                                    <div class="col-md-12">
+                                        <fieldset>
+                                            <label asp-for="Contra" class="control-label">Contraseña:</label> <br>
+                                            <input asp-for="Contra" name="Con" class="form-control" type="password" placeholder="Escriba su contraseña" required="" />
+                                            <span asp-validation-for="Contra" class="text-danger"></span>
+                                        </fieldset>
+                                    </div>
+                                    <br /> <br>
+                                    <div class="col-md-12">
+                                        <fieldset>
+                                            <a href="mascotas"><button type="button" id="form-submit" class="btn-success" style="font-size: 22 px;">
+                                                Iniciar
+                                            </button>
+                                            </a>
+                                        </fieldset>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </Center>
+                </div>
+            </div>
+        </div>

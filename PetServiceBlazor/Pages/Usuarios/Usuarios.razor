@@ -1,0 +1,116 @@
+﻿@page "/usuarios"
+
+  <div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">PetServiceBlazor</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="counter">
+                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            </NavLink>
+        </div>
+        
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="mascotas">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Mascotas
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="usuarios">
+                <span class="oi oi-people" aria-hidden="true"></span> Mi información
+            </NavLink>
+        </div>
+        
+        
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
+
+<PageTitle>Mi infornmación</PageTitle>
+
+@using PetServiceBlazor.Data.Models
+@using System.Net.Http
+@using System.Net.Http.Json
+@inject HttpClient http
+<h1>Mi infornmación</h1>
+
+<div class="title">
+    <div class="title_content">
+        <h1>Información</h1>
+    </div>
+    <div class="title_btn">
+        <a href="/usuarios/add" class="btn btn-success">
+            <i class="oi oi-plus"></i>
+            Añadir
+        </a>
+    </div>
+</div>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (usuarios == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido Paterno</th>
+                <th>Apellido Materno</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usuario in usuarios)
+            {
+                <tr>
+                    <td>@usuario.Nombre</td>
+                    <td>@usuario.ApellidoP</td>
+                    <td>@usuario.ApellidoM</td>
+                    <td>
+                        <span class="icon">
+                            <a href="/usuarios/update/@usuario.IdUsuario" class="oi oi-pencil" title="Editar"></a>
+                        </span>
+                        <span class="icon">
+                            <a href="/usuarios/delete/@usuario.IdUsuario" class="oi oi-trash" title="Borrar"></a>
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+   private readonly string api = "api/Usuarios";
+    private IList<Usuario>? usuarios;
+
+    protected override async Task OnInitializedAsync()
+    {
+        usuarios = await http.GetFromJsonAsync<IList<Usuario>>(api);
+    }
+}
