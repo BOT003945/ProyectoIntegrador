@@ -1,0 +1,109 @@
+﻿@page "/usuarios/add"
+@page "/usuarios/update/{id:int}"
+
+<PageTitle>@(isUpdate ? $"Editar información[IdUsuario : {usuarios.IdUsuario}] " : "Agregar información")</PageTitle>
+<h1>@(isUpdate ? $"Editar información[IdUsuario:{usuarios.IdUsuario}] " : "Agregar información")</h1>
+
+<EditForm Model="@usuarios">
+    <form class="container border" @onsubmit="Save">
+        <!--Nombre-->
+        <div class="mb-2">
+            <label class="form-label" for="nombre">Nombre</label>
+            <InputText class="form-control" @bind-Value="@usuarios.Nombre" id="nombre"></InputText>
+        </div>
+        <!--Apellido paterno-->
+        <div class="mb-2">
+            <label class="form-label" for="apellidop">Apellido Paterno</label>
+            <InputText class="form-control" @bind-Value="@usuarios.ApellidoP" id="apellidop"></InputText>
+        </div>
+        <!--Apellido materno-->
+        <div class="mb-2">
+            <label class="form-label" for="apellidom">Apellido Materno</label>
+            <InputText class="form-control" @bind-Value="@usuarios.ApellidoM" id="apellidom"></InputText>
+        </div>
+        <!--Correo-->
+        <div class="mb-2">
+            <label class="form-label" for="correo">Correo</label>
+            <InputText class="form-control" @bind-Value="@usuarios.Correo" id="correo"></InputText>
+        </div>
+         <!--Contraseña-->
+        <div class="mb-2">
+            <label class="form-label" for="contra">Contraseña</label>
+            <InputText class="form-control" @bind-Value="@usuarios.Contra" id="contra"></InputText>
+        </div>
+        <!--Edad-->
+        <div class="mb-2">
+            <label class="form-label" for="edad">Edad</label>
+            <InputDate class="form-control" @bind-Value="@usuarios.Edad" id="edad"></InputDate>
+        </div>
+        <!--ID del Rol-->
+        @*<div class="mb-2">
+            <label class="form-label" for="IdUsuario">Rol</label>
+            <InputSelect class="form-control" @bind-Value="@usuarios.IdRol" >
+                <option value="-1" disabled>Selecciona un rol</option>
+                @if (loading)
+                {
+                   <option value="0" disabled>Cargando...</option>
+                }else if (roles != null){
+                @foreach(var rol in roles)
+                {
+                  <option value="@rol.IdRol">@rol.NombreRol</option>
+                }
+                }
+            </InputSelect>
+        </div>*@
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-danger" href="/usuarios">Cancelar</a>
+    </form>
+</EditForm>
+
+@using PetServiceBlazor.Data.Models
+@using System.Net.Http
+@using System.Net.Http.Json
+@inject HttpClient http
+@inject NavigationManager NavigationManager
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+    public bool isUpdate { get; set; } = false;
+    
+ 
+    bool loading = true;
+
+    //IList<Rol>? roles;
+   
+    Usuario usuarios = new Usuario();
+
+    protected override async Task OnInitializedAsync()
+    {
+        //roles = await http.GetFromJsonAsync<IList<Rol>>("api/Roles");
+        isUpdate = id != 0;
+        if (isUpdate)
+        {
+            var response = await http.GetFromJsonAsync<Usuario>($"api/Usuarios/{id}");
+            if(response != null)
+            {
+                usuarios = response;
+            }
+        }
+        loading = false;
+    }        
+             
+    protected async Task Save()
+    {
+        HttpResponseMessage? response;
+        if (isUpdate)
+        {
+            response = await http.PutAsJsonAsync<Usuario>($"api/Usuarios/{id}", usuarios!);
+        }
+        else
+        {
+            response = await http.PostAsJsonAsync<Usuario>("api/Usuarios", usuarios!);
+        }
+        Usuario? saved = response.Content.ReadFromJsonAsync<Usuario>().Result;
+        NavigationManager.NavigateTo("/usuarios");
+    }
+
+    
+}

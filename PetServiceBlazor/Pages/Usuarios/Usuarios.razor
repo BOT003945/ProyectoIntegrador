@@ -1,0 +1,63 @@
+﻿@page "/usuarios"
+
+
+<PageTitle>Mi infornmación</PageTitle>
+
+@using PetServiceBlazor.Data.Models
+@using System.Net.Http
+@using System.Net.Http.Json
+@inject HttpClient http
+<h1>Mi infornmación</h1>
+
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (usuarios == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido Paterno</th>
+                <th>Apellido Materno</th>
+                <th>Email</th>
+                <th>Edad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usuario in usuarios)
+            {
+                <tr>
+                    <td>@usuario.Nombre</td>
+                    <td>@usuario.ApellidoP</td>
+                    <td>@usuario.ApellidoM</td>
+                    <td>@usuario.Correo</td>
+                    <td>@usuario.Edad</td>
+                    <td>
+                        <span class="icon">
+                            <a href="/usuarios/update/@usuario.IdUsuario" class="oi oi-pencil" title="Editar"></a>
+                        </span>
+                        <span class="icon">
+                            <a href="/usuarios/delete/@usuario.IdUsuario" class="oi oi-trash" title="Borrar"></a>
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+   private readonly string api = "api/Usuarios";
+   private IList<Usuario>? usuarios;
+
+    protected override async Task OnInitializedAsync()
+    {
+        usuarios = await http.GetFromJsonAsync<IList<Usuario>>(api);
+    }
+}
